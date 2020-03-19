@@ -43,7 +43,7 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet-measure.js"></script>
+        <script src="http://ljagis.github.io/leaflet-measure.js"></script>
         <script src="data/ViasPrincipales_2.js"></script>
         <script src="data/Comunas_cali_3.js"></script>
         <script>
@@ -185,10 +185,21 @@
         bounds_group.addLayer(layer_Comunas_cali_3);
         map.addLayer(layer_Comunas_cali_3);
         
+		var LeafIcon = L.Icon.extend({
+		options: {
+			shadowUrl: 'leaf-shadow.png',
+			iconSize:     [38, 95],
+			shadowSize:   [50, 64],
+			iconAnchor:   [22, 94],
+			shadowAnchor: [4, 62],
+			popupAnchor:  [-3, -76]
+		}
+		});
+		
 		var puntos = L.marker([3.469635,-76.525102]).addTo(map);
 		
 		var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/puntos.png" /> Puntos_cali': puntos_4',<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
         setBounds();
         L.ImageOverlay.include({
             getBounds: function () {
