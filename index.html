@@ -216,7 +216,7 @@
 		];
 		
 		for (var i = 0; i < layer_puntos.length; i++) {
-			marker = new L.marker([layer_puntos[i][1],layer_puntos[i][2]],
+			var marker = new L.marker([layer_puntos[i][1],layer_puntos[i][2]],
 			{icon: puntos})
 			.bindPopup(layer_puntos[i][0])
 			.addTo(map);
