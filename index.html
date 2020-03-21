@@ -9,8 +9,6 @@
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
-		<script src="dist/leaflet.browser.print.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
         <style>
         html, body, #map {
             width: 100%;
@@ -47,19 +45,7 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-measure.js"></script>
         <script src="data/ViasPrincipales_2.js"></script>
-        <script src="data/Comunas_cali_3.js"></script>
-		<script>
-			window.print = function () {
-				domtoimage
-				.toPng(document.body)
-				.then(function (dataUrl) {
-					var link = document.createElement('a');
-					link.download = map.printControl.options.documentTitle || "exportedMap" + '.png';
-					link.href = dataUrl;
-					link.click();
-				});
-			};
-		</script>	
+        <script src="data/Comunas_cali_3.js"></script>	
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -239,20 +225,6 @@
 		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
 		{layers:'idesc:mc_barrios'}).addTo(map);
 		
-		L.control.browserPrint({
-			printModes: [
-				L.control.browserPrint.mode.auto("Download PNG"),
-				L.control.browserPrint.mode.landscape(),
-				L.control.browserPrint.mode.portrait(),
-				L.control.browserPrint.mode.auto(),
-				L.control.browserPrint.mode.custom()
-			]
-		}).addTo(map);
-
-		map.on("browser-print-start", function(e){
-			/*on print start we already have a print map and we can create new control and add it to the print map to be able to print custom information */
-			L.legendControl({position: 'bottomright'}).addTo(e.printMap);
-		});
 		
         var baseMaps = {};
         L.control.layers(baseMaps,{'<img src="legend/punto_negro.jpg" /> Puntos_cali': marker,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
