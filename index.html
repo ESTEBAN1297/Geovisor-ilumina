@@ -216,14 +216,17 @@
 		];
 		
 		for (var i = 0; i < layer_puntos.length; i++) {
-			var marker = new L.marker([layer_puntos[i][1],layer_puntos[i][2]],
+			marker = new L.marker([layer_puntos[i][1],layer_puntos[i][2]],
 			{icon: puntos})
 			.bindPopup(layer_puntos[i][0])
 			.addTo(map);
 			};
 		
+		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
+		{layers:'idesc:mc_barrios'}).addTo(map);
+		
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/punto_negro.jpg" /> Puntos_cali': marker,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/punto_negro.jpg" /> Puntos_cali': marker,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
         setBounds();
         L.ImageOverlay.include({
             getBounds: function () {
