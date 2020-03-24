@@ -230,7 +230,9 @@
 		// Agregar capa wms
 		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
 		{layers:'idesc:mc_barrios'}).addTo(map);
-		
+		map.createPane('layer_wms');
+        map.getPane('layer_wms').style.zIndex = 404;
+        map.getPane('layer_wms').style['mix-blend-mode'] = 'normal';
 		// Agregar geoJson
 		var cali_json = L.geoJson(cali).addTo(map);
 		
