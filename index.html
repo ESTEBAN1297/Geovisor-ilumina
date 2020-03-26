@@ -48,7 +48,6 @@
         <script src="data/Comunas_cali_3.js"></script>
 		<script src="data/cali.js"></script>
 		<script src="dist/leaflet.browser.print.min.js"></script>
-		<script src="dist/leaflet.geocsv.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -226,7 +225,7 @@
 					marker = new L.marker([puntos[i][1],puntos[i][2]],
 					{icon: icono_puntos})
 					.bindPopup(puntos[i][0])
-					.addTo(map);
+					.addTo(layer_puntos);
 					};
 		
 		// Agregar capa wms
@@ -238,9 +237,7 @@
 		
 		// Control de imprimir mapa 
 		L.control.browserPrint().addTo(map);
-		
-		var mi_geocsv = L.geoCsv (null, {firstLineTitles: true, fieldSeparator: ','});
-		
+				
 		// Control de capas
         var baseMaps = {};
         L.control.layers(baseMaps,{'<img src="legend/punto_negro.jpg" /> Puntos_cali': layer_puntos,"Barrios": layer_wms,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
