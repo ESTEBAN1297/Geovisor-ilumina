@@ -235,7 +235,8 @@
 		// Agregar geoJson
 		var cali_json = L.geoJson(cali).addTo(map);
 		
-
+		// Control de imprimir mapa 
+		L.control.browserPrint().addTo(map);
 				
 		// Control de capas
         var baseMaps = {};
@@ -246,9 +247,6 @@
                 return this._bounds;
             }
         });
-		
-		// Control de imprimir mapa 
-		L.control.browserPrint().addTo(map);
         </script>
     </body>
 </html>
