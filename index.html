@@ -220,13 +220,14 @@
 		];
 		
 		// Crear varios puntos 
-		var layer_puntos = L.layergroup();
+		var layer_puntos = {L.layergroup();
 			for (var i = 0; i < puntos.length; i++) {
 					marker = new L.marker([puntos[i][1],puntos[i][2]],
 					{icon: icono_puntos})
 					.bindPopup(puntos[i][0])
 					.addTo(layer_puntos);
 			}
+		};
 		
 		// Agregar capa wms
 		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
