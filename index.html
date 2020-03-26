@@ -80,7 +80,8 @@
         });
         layer_OpenStreetMap_0;
         map.addLayer(layer_OpenStreetMap_0);
-        var img_Radiancia_1 = 'data/Radiancia_1.png';
+        
+		var img_Radiancia_1 = 'data/Radiancia_1.png';
         var img_bounds_Radiancia_1 = [[3.3334413364912687,-76.59096732321208],[3.504050893039614,-76.46323582981742]];
         var layer_Radiancia_1 = new L.imageOverlay(img_Radiancia_1, img_bounds_Radiancia_1);
         bounds_group.addLayer(layer_Radiancia_1);
@@ -226,7 +227,7 @@
 					{icon: icono_puntos})
 					.bindPopup(puntos[i][0])
 					.addTo(layer_puntos);
-					};
+				};
 		
 		// Agregar capa wms
 		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
