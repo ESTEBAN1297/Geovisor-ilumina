@@ -58,11 +58,14 @@
         <script src="data/Comunas_cali_3.js"></script>
 		<script src="data/cali.js"></script>
 		<script src="dist/leaflet.browser.print.min.js"></script>
+<<<<<<< HEAD
 		<script src="dist/leaflet.geocsv-src.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/perliedman-leaflet-control-geocoder/1.12.1/Control.Geocoder.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster-src.js"></script>
+=======
+>>>>>>> f93228e0df18525efb06266d13801dc31e212b43
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -95,7 +98,8 @@
         });
         layer_OpenStreetMap_0;
         map.addLayer(layer_OpenStreetMap_0);
-        var img_Radiancia_1 = 'data/Radiancia_1.png';
+        
+		var img_Radiancia_1 = 'data/Radiancia_1.png';
         var img_bounds_Radiancia_1 = [[3.3334413364912687,-76.59096732321208],[3.504050893039614,-76.46323582981742]];
         var layer_Radiancia_1 = new L.imageOverlay(img_Radiancia_1, img_bounds_Radiancia_1);
         bounds_group.addLayer(layer_Radiancia_1);
@@ -204,8 +208,13 @@
 		
 		// Crear un icono
 		var icono_puntos = L.icon({
+<<<<<<< HEAD
 			iconUrl: 'legend/punto_negro.png',
 			iconSize: [25, 25]
+=======
+			iconUrl: 'legend/punto_negro.jpg',
+			iconSize: [20, 20]
+>>>>>>> f93228e0df18525efb06266d13801dc31e212b43
 		});
 		
 		var puntos = [
@@ -231,9 +240,15 @@
 		["Comuna 21",3.422892,-76.465723],
 		["Comuna 20",3.419147,-76.555873],
 		["Comuna 19",3.410222,-76.544657]
+<<<<<<< HEAD
 		];		
 		// Crear varios puntos
 	
+=======
+		];
+		
+		// Crear varios puntos 
+>>>>>>> f93228e0df18525efb06266d13801dc31e212b43
 		var layer_puntos = L.layerGroup();
 			for (var i = 0; i < puntos.length; i++) {
 					marker = new L.marker([puntos[i][1],puntos[i][2]],
@@ -251,6 +266,7 @@
 		
 		// Control de imprimir mapa 
 		L.control.browserPrint().addTo(map);
+<<<<<<< HEAD
 		
 		
 
@@ -298,6 +314,12 @@
 		// Control de capas
         var baseMaps = {};
         L.control.layers(baseMaps,{'<img src="legend/punto_rojo.png" width="16px"  /> Puntos CSV': bankias,'<img src="legend/punto_negro.png" width="16px" /> Puntos': layer_puntos,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+=======
+				
+		// Control de capas
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/punto_negro.jpg" width="16px" /> Puntos': layer_puntos,"Barrios": layer_wms,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+>>>>>>> f93228e0df18525efb06266d13801dc31e212b43
         setBounds();
         L.ImageOverlay.include({
             getBounds: function () {
