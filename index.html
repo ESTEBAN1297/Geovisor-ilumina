@@ -1,45 +1,55 @@
 <!doctype html>
 <html lang="en">
-    <head>
+	<head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+		  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		  crossorigin=""/>
+		
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet"/>
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.70.0/L.Control.Locate.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/perliedman-leaflet-control-geocoder/1.12.1/Control.Geocoder.css"/>
+        <link rel="stylesheet" href="css/qgis2web.css"/>
+        <link rel="stylesheet" href="css/leaflet-measure.css"/>
         <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-		body{
-				background-image: url(images/nigth_2.jpg);
-				background-size:cover;
-				background-repeat: no-repeat;
-				background-attachment:fixed;
-		}
-		h1{
-				color:white;
-				text-align: center;
-				font-family:Cooper Black;
-		}
+			html, body, #map {
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			body{
+					background-image: url(images/nigth_2.jpg);
+					background-size:cover;
+					background-repeat: no-repeat;
+					background-attachment:fixed;
+			}
+			h1{
+					color:white;
+					text-align: center;
+					font-family:Cooper Black;
+			}
         </style>
         <title> GEOVISOR ILUMINA </title>
 		<h1> BIENVENIDOS A ILUMINA </h1>
-    </head>
-    <body>
+	</head>
+	<body>
         <div align="center" id="map" style="width: 100%; height: 100%; border:0.5">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
-        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.70.0/L.Control.Locate.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
+        <script src="../dist/leaflet.pattern-src.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-hash/0.2.1/leaflet-hash.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/3.13.0/Autolinker.js"></script>
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
@@ -48,7 +58,11 @@
         <script src="data/Comunas_cali_3.js"></script>
 		<script src="data/cali.js"></script>
 		<script src="dist/leaflet.browser.print.min.js"></script>
-		<script src="dist/leaflet.geocsv.js"></script>
+		<script src="dist/leaflet.geocsv-src.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/perliedman-leaflet-control-geocoder/1.12.1/Control.Geocoder.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster-src.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -189,43 +203,44 @@
         map.addLayer(layer_Comunas_cali_3);
 		
 		// Crear un icono
-		var puntos = L.icon({
-			iconUrl: 'legend/punto_negro.jpg',
-			iconSize: [20, 20]
+		var icono_puntos = L.icon({
+			iconUrl: 'legend/punto_negro.png',
+			iconSize: [25, 25]
 		});
 		
-		var layer_puntos = [
-		["2",3.469622,-76.525509],
-		["4",3.4640350,-76.5101683],
-		["5",3.471364744,-76.494589952],
-		["6",3.475221,-76.482086],
-		["3",3.446200,-76.533074],
-		["1",3.452890,-76.568765],
-		["9",3.4357805,-76.5308341],
-		["8",3.45015210,-76.51134600],
-		["12",3.432048,-76.502337],
-		["7",3.456517,-76.488189],
-		["10",3.414040,-76.527715],
-		["11",3.422569,-76.510726],
-		["13",3.4229778,-76.4929633],
-		["14",3.424114,-76.477525],
-		["15",3.399127,-76.505463],
-		["16",3.4038339,-76.5210838],
-		["17",3.3835672,-76.5334245],
-		["18",3.385760,-76.553407],
-		["22",3.346541,-76.532781],
-		["21",3.422892,-76.465723],
-		["20",3.419147,-76.555873],
-		["19",3.410222,-76.544657]
-		];
-		
-		// Crear varios puntos 
-		for (var i = 0; i < layer_puntos.length; i++) {
-			marker = new L.marker([layer_puntos[i][1],layer_puntos[i][2]],
-			{icon: puntos})
-			.bindPopup(layer_puntos[i][0])
-			.addTo(map);
-			};
+		var puntos = [
+		["Comuna 2",3.469622,-76.525509],
+		["Comuna 4",3.4640350,-76.5101683],
+		["Comuna 5",3.471364744,-76.494589952],
+		["Comuna 6",3.475221,-76.482086],
+		["Comuna 3",3.446200,-76.533074],
+		["Comuna 1",3.452890,-76.568765],
+		["Comuna 9",3.4357805,-76.5308341],
+		["Comuna 8",3.45015210,-76.51134600],
+		["Comuna 12",3.432048,-76.502337],
+		["Comuna 7",3.456517,-76.488189],
+		["Comuna 10",3.414040,-76.527715],
+		["Comuna 11",3.422569,-76.510726],
+		["Comuna 13",3.4229778,-76.4929633],
+		["Comuna 14",3.424114,-76.477525],
+		["Comuna 15",3.399127,-76.505463],
+		["Comuna 16",3.4038339,-76.5210838],
+		["Comuna 17",3.3835672,-76.5334245],
+		["Comuna 18",3.385760,-76.553407],
+		["Comuna 22",3.346541,-76.532781],
+		["Comuna 21",3.422892,-76.465723],
+		["Comuna 20",3.419147,-76.555873],
+		["Comuna 19",3.410222,-76.544657]
+		];		
+		// Crear varios puntos
+	
+		var layer_puntos = L.layerGroup();
+			for (var i = 0; i < puntos.length; i++) {
+					marker = new L.marker([puntos[i][1],puntos[i][2]],
+					{icon: icono_puntos})
+					.bindPopup(puntos[i][0])
+					.addTo(layer_puntos);
+			}
 		
 		// Agregar capa wms
 		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
@@ -237,11 +252,52 @@
 		// Control de imprimir mapa 
 		L.control.browserPrint().addTo(map);
 		
-		var mi_geocsv = L.geoCsv (null, {firstLineTitles: true, fieldSeparator: ','});
+		
+
+		var bankias = L.geoCsv(null, {
+			onEachFeature: function (feature, layer) {
+				var popup = '';
+				for (var clave in feature.properties) {
+					var title = bankias.getPropertyTitle(clave);
+					popup += '<b>'+title+'</b><br />'+feature.properties[clave]+'<br /><br />';
+				}
+				layer.bindPopup(popup);
+			},
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {
+					icon:L.icon({
+						iconUrl: 'legend/punto_rojo.png',
+						iconSize: [20,20],
+						shadowSize:   [41, 41],
+						shadowAnchor: [13, 20]
+					})
+				});
+			},
+			firstLineTitles: true
+		}).addTo(map);
+
+		$.ajax ({
+			type:'GET',
+			dataType:'text',
+			url:'bankias.csv',
+		   error: function() {
+			 alert('No se pudieron cargar los datos');
+		   },
+			success: function(csv) {
+			  var cluster = new L.MarkerClusterGroup();
+				bankias.addData(csv);
+				cluster.addLayer(bankias);
+				map.addLayer(cluster);
+				map.fitBounds(cluster.getBounds());
+			},
+		   complete: function() {
+			  $('#cargando').delay(500).fadeOut('slow');
+		   }
+		});
 		
 		// Control de capas
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/punto_negro.jpg" /> Puntos_cali': marker,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/punto_rojo.png" width="16px"  /> Puntos CSV': bankias,'<img src="legend/punto_negro.png" width="16px" /> Puntos': layer_puntos,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
         setBounds();
         L.ImageOverlay.include({
             getBounds: function () {
