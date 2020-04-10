@@ -18,37 +18,102 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/perliedman-leaflet-control-geocoder/1.12.1/Control.Geocoder.css"/>
         <link rel="stylesheet" href="css/qgis2web.css"/>
         <link rel="stylesheet" href="css/leaflet-measure.css"/>
-		<script src="cordova.js"></script>
-        <style>
-			html, body, #map {
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   
+        
+        <script src="js/papaparse.min.js"></script>
+		
+		<style>
+			html,body {
+				margin: 0;	
+				padding: 0;
+				background-image: url(images/nigth_2.jpg);
+				background-size:cover;
+				background-repeat: no-repeat;
+				background-attachment:fixed;
+			}
+			.caja {
+				display: block;
+				float:left;
+				width: 21%;
+				margin: 1%;
+				padding: 1%;
+				border: 1px solid #999999;
+				background-color: rgba(0, 0, 0, .5);
+			}
+			.cajamap {
+				display: block;
+				float:right;
+				width: 75%;
+				height: 100%;
+				margin: 1%;
+				padding: 1%;
+				border: 1px solid #999999;
+				background-color: rgba(0, 0, 0, .5);
+			}
+			#map {
 				width: 100%;
 				height: 100%;
-				padding: 0;
-				margin: 0;
 			}
-			body{
-					background-image: url(images/nigth_2.jpg);
-					background-size:cover;
-					background-repeat: no-repeat;
-					background-attachment:fixed;
-			}
-			h1{
-					color:white;
-					text-align: center;
-					font-family:Cooper Black;
+			h1,h2{
+				color:white;
+				text-align: center;
+				font-family:Cooper Black;
 			}
         </style>
         <title> GEOVISOR ILUMINA </title>
 		<h1> BIENVENIDOS A ILUMINA </h1>
 	</head>
 	<body>
-        <div align="center" id="map" style="width: 100%; height: 100%; border:0.5">
-        </div>
+		<div class="cajamap">
+			<div id="map"></div>
+        </div>	
+		
+		<div class="caja">
+			    <h2>Contaminación Lumínica</h2>
+			    <p align="justify"><Font color="ffffff">Este es el geovisor sobre la polución de la luz, que indica la suma total de todos los efectos adversos de la luz artificial. Es decir, la emisión de luz de fuentes de energía artificial provocando un aumento del brillo en el cielo.</font></p>
+			    <br>
+			    <p align="justify"><Font color="ffffff">En este visor se muestra la visualización de los niveles de iluminación captados por el sensor VIIRS del satelite SUOMI-NPP. Además, permite cargar un archivo CSV con valores del instrumento medidor de calidad del cielo (SQM)</font></p>
+			<div id="archivo">                
+                <form class="form-inline">
+
+                    <div class="form-group">
+                        <label for="files"><Font color="ffffff" >Ingresar CSV :</Font></label>
+                        <input type="file" id="files" class="form-control" accept=".csv" required/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="submit-file" class="btn btn-primary">Cargar</button>
+                    </div>
+                    
+                </form>
+			</div>
+			<div id="contacto"> 
+			<Font color="ffffff">Contáctanos: </Font>
+			    <br>
+                <Font color="ffffff">Esteban Solano Salamando</Font> &nbsp;&nbsp;
+                <a href="mailto:esteban.solano@correounivalle.edu.co?Subject=Contacto%20visor%ilumina">
+				<img src="images/gmail.jpeg" style="width:12px;height:12px;border:0"></a>&nbsp;
+			    <br>
+                <Font color="ffffff">Felipe Jurado Avila</Font> &nbsp;&nbsp; 
+                <a href="mailto:jurado.luis@correounivalle.edu.co?Subject=Contacto%20visor%ilumina">
+				<img src="images/gmail.jpeg" style="width:12px;height:12px;border:0"></a>&nbsp;
+			</div>
+		</div>
+
+
+        <div id="map">
         <script src="js/qgis2web_expressions.js"></script>
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.70.0/L.Control.Locate.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="../dist/leaflet.pattern-src.js"></script>
+        <script src="js/easy-button.js"></script>
+        <script src="dist/leaflet.pattern-src.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-hash/0.2.1/leaflet-hash.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/3.13.0/Autolinker.js"></script>
         <script src="js/rbush.min.js"></script>
@@ -64,14 +129,26 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/perliedman-leaflet-control-geocoder/1.12.1/Control.Geocoder.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster-src.js"></script>
+        <script src="js/papaparse.min.js"></script>
         <script>
-        var map = L.map('map', {
+        
+		
+		function ajusta_Altura() {
+			var altura = document.getElementById('archivo').offsetHeight
+			document.getElementById('map').style.height = altura+400+"px";
+		}
+
+		ajusta_Altura();
+		
+		
+		var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
         }).fitBounds([[3.3118642244290566,-76.61733556776372],[3.51339676310195,-76.42195916773196]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
-        var measureControl = new L.Control.Measure({
+        
+		var measureControl = new L.Control.Measure({
             position: 'topleft',
             primaryLengthUnit: 'meters',
             secondaryLengthUnit: 'kilometers',
@@ -83,7 +160,8 @@
         .innerHTML = '';
         document.getElementsByClassName('leaflet-control-measure-toggle')[0]
         .className += ' fas fa-ruler';
-        var bounds_group = new L.featureGroup([]);
+        
+var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
         var layer_OpenStreetMap_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -253,52 +331,52 @@
 		// Control de imprimir mapa 
 		L.control.browserPrint().addTo(map);
 		
-		
-
-		var bankias = L.geoCsv(null, {
-			onEachFeature: function (feature, layer) {
-				var popup = '';
-				for (var clave in feature.properties) {
-					var title = bankias.getPropertyTitle(clave);
-					popup += '<b>'+title+'</b><br />'+feature.properties[clave]+'<br /><br />';
-				}
-				layer.bindPopup(popup);
-			},
-			pointToLayer: function (feature, latlng) {
-				return L.marker(latlng, {
-					icon:L.icon({
+        // Cargar CSV usando papaparse
+    	$('#submit-file').on("click", function(e){
+            e.preventDefault();
+            $('#files').parse({
+                config: {
+                    delimiter: "auto",
+                    complete: dispplayCSV,
+                },
+                before: function(file, inputElem)
+                {
+                    console.log("file: ", file);
+                },
+                error: function(err, file)
+                {
+                    console.log("Eror: ", err, file);
+                    alert("ERROR Verfica tu archivo CSV!");
+                },
+                complete: function()
+                {
+                    console.log("Completado para el archivo");
+                    alert("Datos cargados correctamente!");
+                }
+            });
+        });
+        var layer_puntos_CSV = L.layerGroup();
+    	function dispplayCSV(results)
+        {
+            var data = results.data;
+            for (let i =1;i<data.length-1;i++)
+            {
+                var row = data[i];
+                var cells = row.join(",").split(",");
+                L.marker([cells[2], cells[3]],{
+                icon:L.icon({
 						iconUrl: 'legend/punto_rojo.png',
-						iconSize: [20,20],
-						shadowSize:   [41, 41],
-						shadowAnchor: [13, 20]
-					})
-				});
-			},
-			firstLineTitles: true
-		}).addTo(map);
-
-		$.ajax ({
-			type:'GET',
-			dataType:'text',
-			url:'bankias.csv',
-		   error: function() {
-			 alert('No se pudieron cargar los datos');
-		   },
-			success: function(csv) {
-			  var cluster = new L.MarkerClusterGroup();
-				bankias.addData(csv);
-				cluster.addLayer(bankias);
-				map.addLayer(cluster);
-				map.fitBounds(cluster.getBounds());
-			},
-		   complete: function() {
-			  $('#cargando').delay(500).fadeOut('slow');
-		   }
-		});
-		
+						iconSize: [20,20]
+                            })
+                }
+                ).bindPopup(cells[1])
+                .addTo(layer_puntos_CSV);
+            }
+        }
+    
 		// Control de capas
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/punto_rojo.png" width="16px"  /> Puntos CSV': bankias,'<img src="legend/punto_negro.png" width="16px" /> Puntos': layer_puntos,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/punto_rojo.png" width="16px"  /> Puntos CSV': layer_puntos_CSV,'<img src="legend/punto_negro.png" width="16px" /> Puntos': layer_puntos,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
         setBounds();
         L.ImageOverlay.include({
             getBounds: function () {
