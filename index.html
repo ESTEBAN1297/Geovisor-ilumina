@@ -25,6 +25,7 @@
    
         
         <script src="js/papaparse.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
 		
 		<style>
 			html,body {
@@ -63,15 +64,18 @@
 				text-align: center;
 				font-family:Cooper Black;
 			}
+			.legend {
+			opacity: 0.9;
+			}
         </style>
         <title> GEOVISOR ILUMINA </title>
-		<h1> BIENVENIDOS A ILUMINA </h1>
+		<h1> GEOVISOR ILUMINA </h1>
 	</head>
 	<body>
 		<div class="cajamap">
 			<div id="map"></div>
         </div>	
-		
+
 		<div class="caja">
 			    <h2>Contaminación Lumínica</h2>
 			    <p align="justify"><Font color="ffffff">Este es el geovisor sobre la polución de la luz, que indica la suma total de todos los efectos adversos de la luz artificial. Es decir, la emisión de luz de fuentes de energía artificial provocando un aumento del brillo en el cielo.</font></p>
@@ -81,7 +85,7 @@
                 <form class="form-inline">
 
                     <div class="form-group">
-                        <label for="files"><Font color="ffffff" >Ingresar CSV :</Font></label>
+                        <label for="files"><Font color="ffffff">Ingresar CSV :</Font></label>
                         <input type="file" id="files" class="form-control" accept=".csv" required/>
                     </div>
                     <div class="form-group">
@@ -92,7 +96,7 @@
 			</div>
 			<div id="contacto"> 
 			<Font color="ffffff">Contáctanos: </Font>
-			    <br>
+				<br>
                 <Font color="ffffff">Esteban Solano Salamando</Font> &nbsp;&nbsp;
                 <a href="mailto:esteban.solano@correounivalle.edu.co?Subject=Contacto%20visor%ilumina">
 				<img src="images/gmail.jpeg" style="width:12px;height:12px;border:0"></a>&nbsp;
@@ -102,6 +106,7 @@
 				<img src="images/gmail.jpeg" style="width:12px;height:12px;border:0"></a>&nbsp;
 			</div>
 		</div>
+		</nav>
 
 
         <div id="map">
@@ -122,6 +127,8 @@
 		<script src="dist/leaflet.geocsv-src.js"></script>
 
         <script src="js/papaparse.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+		
         <script>
         
 		
@@ -315,8 +322,6 @@
 		var layer_wms = L.tileLayer.wms('http://ws-idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
 		{layers:'idesc:mc_barrios'}).addTo(map);
 		
-		// Agregar geoJson
-		var cali_json = L.geoJson(cali).addTo(map);
 		
 		// Control de imprimir mapa 
 		L.control.browserPrint().addTo(map);
@@ -363,14 +368,25 @@
                 .addTo(layer_puntos_CSV);
             }
         }
-    
+		
+	
+		//Leyenda en el mapa
+		var legend = L.control({position: 'bottomright'});
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend');
+			div.innerHTML +=
+			'<img alt="legend" src="legend/leyen.jpeg " width="140" height="130" />';
+			return div;
+		};
+		legend.addTo(map);
+		
 		// Control de capas
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/punto_rojo.png" width="16px"  /> Puntos CSV': layer_puntos_CSV,'<img src="legend/punto_negro.png" width="16px" /> Puntos': layer_puntos,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia": layer_Radiancia_1,"Barrios": layer_wms,"Cali":cali_json,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/punto_rojo.png" width="16px"  /> Puntos CSV': layer_puntos_CSV,'<img src="legend/punto_negro.png" width="16px" /> Puntos': layer_puntos,'<img src="legend/Comunas_cali_3.png" /> Comunas_cali': layer_Comunas_cali_3,'<img src="legend/ViasPrincipales_2.png" /> ViasPrincipales': layer_ViasPrincipales_2,"Radiancia W/cm^2*sr": layer_Radiancia_1,"Barrios": layer_wms,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
         setBounds();
         L.ImageOverlay.include({
             getBounds: function () {
-                return this._bounds;
+                return this._bounds;	
             }
         });
         </script>
